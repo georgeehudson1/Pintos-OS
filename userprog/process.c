@@ -118,9 +118,15 @@ process_exit (void)
       cur->pagedir = NULL;
       pagedir_activate (NULL);
       pagedir_destroy (pd);
+
     }
+printf("%s:exit(%d)\n",cur-> name,cur->status);
+//printf ("%s:exit()\n", thread_name());
 }
 
+//printf ("%s:exit(%d)\n",cur-> name,cur->status);
+//printf("%s : exit(%d ", thread-name, thread-exit-code);
+//printf ("%s:exit(%d)\n",thread_name,thread_exit_code);
 /* Sets up the CPU for running user code in the current
    thread.
    This function is called on every context switch. */
@@ -135,6 +141,7 @@ process_activate (void)
   /* Set thread's kernel stack for use in processing
      interrupts. */
   tss_update ();
+
 }
 
 /* We load ELF binaries.  The following definitions are taken
@@ -443,7 +450,7 @@ setup_stack (void **esp)
     {
       success = install_page (((uint8_t *) PHYS_BASE) - PGSIZE, kpage, true);
       if (success) {
-        *esp = PHYS_BASE;
+        *esp = PHYS_BASE -12;
       } else
         palloc_free_page (kpage);
     }
